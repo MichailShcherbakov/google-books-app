@@ -3,18 +3,11 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   SelectProps,
 } from "@mui/material";
-
-export enum CategoryFilterEnum {
-  ALL = "ALL",
-  ART = "ART",
-  BIOGRAPHY = "BIOGRAPHY",
-  COMPUTERS = "COMPUTERS",
-  HISTORY = "HISTORY",
-  MEDICAL = "MEDICAL",
-  POETRY = "POETRY",
-}
+import { useCurrentBookFilterBy } from "~/store/books/hooks";
+import { CategoryFilterEnum } from "~/store/books/type";
 
 export type CategoryFilterSelectItem = {
   id: string;
@@ -61,13 +54,24 @@ const CATEGORY_FILTER_SELECT_ITEMS: CategoryFilterSelectItem[] = [
 ];
 
 export interface CategoryFilterSelectProps
-  extends Omit<SelectProps, "value" | ""> {}
+  extends Omit<SelectProps<CategoryFilterEnum>, "value" | ""> {}
 
 export function CategoryFilterSelect(props: CategoryFilterSelectProps) {
+  const { filterBy, setFilterBy } = useCurrentBookFilterBy();
+
+  function changeHandler(e: SelectChangeEvent<CategoryFilterEnum>) {
+    setFilterBy(e.target.value as CategoryFilterEnum);
+  }
+
   return (
     <FormControl size="small">
-      <InputLabel>Sort by</InputLabel>
-      <Select {...props} value={CategoryFilterEnum.ALL} label="Sort by">
+      <InputLabel>Select category</InputLabel>
+      <Select
+        {...props}
+        value={filterBy}
+        label="Select category"
+        onChange={changeHandler}
+      >
         {CATEGORY_FILTER_SELECT_ITEMS.map(item => (
           <MenuItem key={item.id} value={item.value}>
             {item.label}
