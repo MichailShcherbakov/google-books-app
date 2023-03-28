@@ -2,9 +2,13 @@ import { createSelector } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { RootState } from "..";
-import { useAppSelector } from "../hooks";
-import { setBookCategoryFilterAction, setBooksSortByAction } from "./actions";
-import { CategoryFilterEnum, SortByEnum } from "./type";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import {
+  loadMoreBooksAction,
+  setBookCategoryFilterAction,
+  setBooksSortByAction,
+} from "./actions";
+import { CategoryFilterEnum, RequestStatusEnum, SortByEnum } from "./type";
 
 export function useCurrentBookSortBy() {
   const dispatch = useDispatch();
@@ -59,4 +63,30 @@ export function useBooks() {
   return {
     books,
   };
+}
+
+export function useLoadMoreBooks() {
+  const dispatch = useAppDispatch();
+  const hasNotLoadedBooks = useAppSelector(
+    state => Object.keys(state.books.all).length < state.books.totalCount,
+  );
+  const isLoading = useAppSelector(
+    state => state.books.status === RequestStatusEnum.REQUESTED,
+  );
+
+  const loadMoreBooks = React.useCallback(() => {
+    dispatch(loadMoreBooksAction());
+  }, [dispatch]);
+
+  return {
+    isLoading,
+    loadMoreBooks,
+    hasNotLoadedBooks,
+  };
+}
+
+export function useSelectBooksInfo() {
+  const totalCount = useAppSelector(state => state.books.totalCount);
+
+  return { totalCount };
 }

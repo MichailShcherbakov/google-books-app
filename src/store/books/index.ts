@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  loadMoreBooksAction,
   requestBooksAction,
   setBookCategoryFilterAction,
   setBooksAction,
@@ -42,13 +43,19 @@ const bookSlice = createSlice({
     builder
       .addCase(setBooksAction, (state, action) => {
         state.totalCount = action.payload.totalCount;
-        state.all = action.payload.books.reduce<Record<Book["id"], Book>>(
+
+        const bookMap = action.payload.books.reduce<Record<Book["id"], Book>>(
           (all, hotel) => {
             all[hotel.id] = hotel;
             return all;
           },
           {},
         );
+
+        state.all = {
+          ...state.all,
+          ...bookMap,
+        };
       })
       .addCase(setBooksRequestStatusAction, (state, action) => {
         state.status = action.payload.status;
@@ -59,11 +66,15 @@ const bookSlice = createSlice({
       })
       .addCase(setBooksSortByAction, (state, action) => {
         state.criteria.sortBy = action.payload.sortBy;
-        state.status = RequestStatusEnum.RECEIVED;
+        state.status = RequestStatusEnum.REQUESTED;
       })
       .addCase(setBookCategoryFilterAction, (state, action) => {
         state.criteria.filterBy = action.payload.filterBy;
-        state.status = RequestStatusEnum.RECEIVED;
+        state.status = RequestStatusEnum.REQUESTED;
+      })
+      .addCase(loadMoreBooksAction, state => {
+        state.criteria.startIndex += state.criteria.maxResults; // using like a pagination step
+        state.status = RequestStatusEnum.REQUESTED;
       });
   },
 });

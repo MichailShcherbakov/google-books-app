@@ -27,3 +27,5 @@ export const setBooksSortByAction = createAction<{
 export const setBookCategoryFilterAction = createAction<{
   filterBy: CategoryFilterEnum;
 }>("setBookCategoryFilterAction");
+
+export const loadMoreBooksAction = createAction("loadMoreBooksAction");
