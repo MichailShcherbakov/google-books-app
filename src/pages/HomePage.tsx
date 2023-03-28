@@ -1,25 +1,25 @@
 import { Stack } from "@mui/material";
-import React from "react";
-import { GoogleBookApi } from "~/api";
 import { AppBar } from "~/components/AppBar";
+import { BookGrid } from "~/components/BookGrid";
 
 export function HomePage() {
-  React.useEffect(() => {
-    GoogleBookApi.getBooks({
-      pattern: "flowers",
-    });
-  }, []);
-
   return (
     <Stack
       direction="column"
       sx={{
         width: "100%",
         height: "100vh",
-        overflow: "hidden",
+        overflow: "auto",
       }}
     >
       <AppBar />
+      <Stack
+        sx={theme => ({
+          padding: theme.spacing(4),
+        })}
+      >
+        <BookGrid />
+      </Stack>
     </Stack>
   );
 }

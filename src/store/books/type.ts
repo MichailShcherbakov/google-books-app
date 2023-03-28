@@ -6,22 +6,22 @@ export enum RequestStatusEnum {
 }
 
 export enum SortByEnum {
-  NONE = "NONE",
-  RELEVANCE = "RELEVANCE",
-  NEWEST = "NEWEST",
+  RELEVANCE = "relevance",
+  NEWEST = "newest",
 }
 
 export enum CategoryFilterEnum {
-  ALL = "ALL",
-  ART = "ART",
-  BIOGRAPHY = "BIOGRAPHY",
-  COMPUTERS = "COMPUTERS",
-  HISTORY = "HISTORY",
-  MEDICAL = "MEDICAL",
-  POETRY = "POETRY",
+  ALL = "all",
+  ART = "art",
+  BIOGRAPHY = "biography",
+  COMPUTERS = "computers",
+  HISTORY = "history",
+  MEDICAL = "medical",
+  POETRY = "poetry",
 }
 
 export type BookSelectCriteria = {
+  pattern: string;
   filterBy: CategoryFilterEnum;
   sortBy: SortByEnum;
   startIndex: number;
@@ -31,15 +31,15 @@ export type BookSelectCriteria = {
 export type Book = {
   id: string;
   volumeInfo: {
-    authors: string[];
+    authors?: string[];
     averageRating: number;
     categories: string[];
     description: string;
-    imageLinks: {
+    imageLinks?: {
       smallThumbnail: string;
       thumbnail: string;
     };
-    pageCount: string;
+    pageCount?: number;
     publisher: string;
     publishedDate: string;
     title: string;

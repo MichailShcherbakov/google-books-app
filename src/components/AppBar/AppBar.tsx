@@ -13,9 +13,14 @@ export function AppBar(props: AppBarProps) {
       direction="row"
       alignItems="center"
       sx={theme => ({
+        position: "sticky",
+        top: 0,
+        left: 0,
+        flexShrink: 0,
         height: theme.spacing(10),
         paddingX: theme.spacing(4),
         borderBottom: `1px solid ${theme.palette.divider}`,
+        background: theme.palette.background.default,
       })}
     >
       <Stack direction="row" alignItems="center" gap={2}>

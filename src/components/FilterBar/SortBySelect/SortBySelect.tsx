@@ -17,11 +17,6 @@ export type SortBySelectItem = {
 
 const SORT_BY_SELECT_ITEMS: SortBySelectItem[] = [
   {
-    id: SortByEnum.NONE,
-    label: "None",
-    value: SortByEnum.NONE,
-  },
-  {
     id: SortByEnum.RELEVANCE,
     label: "Relevance",
     value: SortByEnum.RELEVANCE,

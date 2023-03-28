@@ -25,6 +25,7 @@ const initialState: BookState = {
   all: {},
   totalCount: 0,
   criteria: {
+    pattern: "",
     filterBy: CategoryFilterEnum.ALL,
     sortBy: SortByEnum.RELEVANCE,
     startIndex: 0,
