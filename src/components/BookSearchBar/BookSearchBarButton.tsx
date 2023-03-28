@@ -1,6 +1,6 @@
 import { ButtonBase, styled } from "@mui/material";
 
-export const SearchBarButton = styled(ButtonBase)(({ theme }) => ({
+export const BookSearchBarButton = styled(ButtonBase)(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
 

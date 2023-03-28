@@ -1,28 +1,37 @@
-import { BookSelectCriteria } from "~/store/books/type";
-import { DEFAULT_MAX_RESULTS, DEFAULT_START_INDEX } from "./constants";
-import { URLBuilder } from "./helpers/URLBuilder";
+import { BookSelectCriteria, CategoryFilterEnum } from "~/store/books/type";
+import { EndPointBuilder } from "./helpers/EndPointBuilder";
+import { normalizeSearchParam } from "./helpers/normalizeSearchParam";
+import { QueryBuilder } from "./helpers/QueryBuilder";
 import { GetBooksResult } from "./type";
 
 export const GoogleBookApi = {
   async getBooks(options: BookSelectCriteria): Promise<GetBooksResult> {
-    const {
-      pattern,
-      sortBy = "relevance",
-      startIndex = DEFAULT_START_INDEX,
-      maxResults = DEFAULT_MAX_RESULTS,
-    } = options;
+    const { pattern, sortBy, filterBy, startIndex, pageSize } = options;
 
-    const urlBuilder = URLBuilder.create();
+    const normalizedPattern = normalizeSearchParam(pattern);
+    const normalizedFilterBy = normalizeSearchParam(filterBy);
+    const normalizedSortBy = normalizeSearchParam(sortBy);
 
-    const safePattern = pattern?.trim().toLocaleLowerCase() ?? "";
+    const endPointBuilder = new EndPointBuilder();
+    const queryBuilder = new QueryBuilder();
 
-    urlBuilder
-      .addParam("q", safePattern, "+intitle:keyes")
+    normalizedPattern.split(" ").forEach(word => {
+      queryBuilder.addParam("intitle", word);
+    });
+
+    if (filterBy !== CategoryFilterEnum.ALL) {
+      queryBuilder.addParam("subject", normalizedFilterBy);
+    }
+
+    const q = queryBuilder.build();
+
+    endPointBuilder
+      .addParam("q", q)
       .addParam("startIndex", startIndex)
-      .addParam("maxResults", maxResults)
-      .addParam("orderBy", sortBy);
+      .addParam("maxResults", pageSize)
+      .addParam("orderBy", normalizedSortBy);
 
-    const endpoint = urlBuilder.build();
+    const endpoint = endPointBuilder.build();
 
     const data: GetBooksResult = await fetch(endpoint).then(req => req.json());
 

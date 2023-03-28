@@ -1,9 +1,9 @@
 import { styled } from "@mui/material";
 
-export interface SearchBarLayoutProps
+export interface BookSearchBarLayoutProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const SearchBarLayout = styled("div")(({ theme }) => ({
+export const BookSearchBarLayout = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   alignItems: "center",

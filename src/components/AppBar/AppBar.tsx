@@ -2,7 +2,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { StackProps } from "@mui/system";
 import { ReactComponent as LogoIcon } from "~/assets/icons/logo.svg";
 import { FilterBar } from "../FilterBar";
-import { SearchBar } from "../SearchBar";
+import { BookSearchBar } from "../BookSearchBar";
 
 export interface AppBarProps extends StackProps {}
 
@@ -47,7 +47,7 @@ export function AppBar(props: AppBarProps) {
         gap={2}
       >
         <FilterBar />
-        <SearchBar />
+        <BookSearchBar />
       </Stack>
       <Divider orientation="vertical" variant="inset" />
       <Stack direction="row" alignItems="center"></Stack>

@@ -10,7 +10,7 @@ export function BookGrid() {
   return (
     <Grid container spacing={2}>
       {books.map(book => (
-        <Grid item key={book.id} xs={12} sm={6} md={3} lg={2}>
+        <Grid item key={book.etag} xs={12} sm={6} md={3} lg={2}>
           <BookCard book={book} />
         </Grid>
       ))}

@@ -6,7 +6,7 @@ import {
   SelectChangeEvent,
   SelectProps,
 } from "@mui/material";
-import { useCurrentBookSortBy } from "~/store/books/hooks";
+import { useCurrentBookSearchSortBy } from "~/store/books/hooks";
 import { SortByEnum } from "~/store/books/type";
 
 export type SortBySelectItem = {
@@ -32,7 +32,7 @@ export interface SortBySelectProps
   extends Omit<SelectProps<SortByEnum>, "value" | ""> {}
 
 export function SortBySelect(props: SortBySelectProps) {
-  const { sortBy, setSortBy } = useCurrentBookSortBy();
+  const { sortBy, setSortBy } = useCurrentBookSearchSortBy();
 
   function changeHandler(e: SelectChangeEvent<SortByEnum>) {
     setSortBy(e.target.value as SortByEnum);

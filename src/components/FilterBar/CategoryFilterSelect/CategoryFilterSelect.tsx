@@ -6,7 +6,7 @@ import {
   SelectChangeEvent,
   SelectProps,
 } from "@mui/material";
-import { useCurrentBookFilterBy } from "~/store/books/hooks";
+import { useCurrentBookSearchFilterBy } from "~/store/books/hooks";
 import { CategoryFilterEnum } from "~/store/books/type";
 
 export type CategoryFilterSelectItem = {
@@ -57,7 +57,7 @@ export interface CategoryFilterSelectProps
   extends Omit<SelectProps<CategoryFilterEnum>, "value" | ""> {}
 
 export function CategoryFilterSelect(props: CategoryFilterSelectProps) {
-  const { filterBy, setFilterBy } = useCurrentBookFilterBy();
+  const { filterBy, setFilterBy } = useCurrentBookSearchFilterBy();
 
   function changeHandler(e: SelectChangeEvent<CategoryFilterEnum>) {
     setFilterBy(e.target.value as CategoryFilterEnum);

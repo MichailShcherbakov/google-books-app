@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  appendBooksAction,
   loadMoreBooksAction,
   requestBooksAction,
-  setBookCategoryFilterAction,
+  setBookRequestStatusAction,
   setBooksAction,
-  setBooksRequestStatusAction,
-  setBooksSortByAction,
+  setBookSearchFilterByAction,
+  setBookSearchPatternAction,
+  setBookSearchSortByAction,
 } from "./actions";
 import {
   Book,
@@ -16,21 +18,21 @@ import {
 } from "./type";
 
 export type BookState = {
-  all: Record<Book["id"], Book>;
+  all: Array<Book>;
   totalCount: number;
   criteria: BookSelectCriteria;
   status: RequestStatusEnum;
 };
 
 const initialState: BookState = {
-  all: {},
+  all: [],
   totalCount: 0,
   criteria: {
     pattern: "",
     filterBy: CategoryFilterEnum.ALL,
     sortBy: SortByEnum.RELEVANCE,
     startIndex: 0,
-    maxResults: 30,
+    pageSize: 30,
   },
   status: RequestStatusEnum.IDLE,
 };
@@ -43,38 +45,37 @@ const bookSlice = createSlice({
     builder
       .addCase(setBooksAction, (state, action) => {
         state.totalCount = action.payload.totalCount;
+        state.all = action.payload.books ?? [];
 
-        const bookMap = action.payload.books.reduce<Record<Book["id"], Book>>(
-          (all, hotel) => {
-            all[hotel.id] = hotel;
-            return all;
-          },
-          {},
-        );
-
-        state.all = {
-          ...state.all,
-          ...bookMap,
-        };
+        console.log(state.all.map(a => a.volumeInfo.publishedDate));
       })
-      .addCase(setBooksRequestStatusAction, (state, action) => {
+      .addCase(appendBooksAction, (state, action) => {
+        state.all.push(...action.payload.books);
+      })
+      .addCase(setBookRequestStatusAction, (state, action) => {
         state.status = action.payload.status;
       })
-      .addCase(requestBooksAction, (state, action) => {
-        state.criteria = action.payload.criteria;
-        state.status = RequestStatusEnum.RECEIVED;
+      .addCase(requestBooksAction, state => {
+        state.status = RequestStatusEnum.REQUESTED;
       })
-      .addCase(setBooksSortByAction, (state, action) => {
+      .addCase(setBookSearchPatternAction, (state, action) => {
+        state.criteria.pattern = action.payload.pattern;
+      })
+      .addCase(setBookSearchSortByAction, (state, action) => {
         state.criteria.sortBy = action.payload.sortBy;
-        state.status = RequestStatusEnum.REQUESTED;
       })
-      .addCase(setBookCategoryFilterAction, (state, action) => {
+      .addCase(setBookSearchFilterByAction, (state, action) => {
         state.criteria.filterBy = action.payload.filterBy;
-        state.status = RequestStatusEnum.REQUESTED;
       })
       .addCase(loadMoreBooksAction, state => {
-        state.criteria.startIndex += state.criteria.maxResults; // using like a pagination step
-        state.status = RequestStatusEnum.REQUESTED;
+        if (
+          state.criteria.startIndex + state.criteria.pageSize >
+          state.totalCount
+        ) {
+          return;
+        }
+
+        state.criteria.startIndex += state.criteria.pageSize;
       });
   },
 });

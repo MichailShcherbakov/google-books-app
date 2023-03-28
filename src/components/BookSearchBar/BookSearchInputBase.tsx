@@ -1,6 +1,6 @@
 import { InputBase, styled } from "@mui/material";
 
-export const SearchInputBase = styled(InputBase)(({ theme }) => ({
+export const BookSearchInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
 
   width: "100%",

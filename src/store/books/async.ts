@@ -1,18 +1,18 @@
-import { all, call, fork, put, select, takeLatest } from "redux-saga/effects";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import { GoogleBookApi } from "~/api";
 import { GetBooksResult } from "~/api/type";
 import { RootState } from "..";
 import {
-  loadMoreBooksAction,
+  appendBooksAction,
   requestBooksAction,
-  setBookCategoryFilterAction,
+  RequestBooksActionOptions,
+  setBookRequestStatusAction,
   setBooksAction,
-  setBooksRequestStatusAction,
-  setBooksSortByAction,
 } from "./actions";
 import { BookSelectCriteria, RequestStatusEnum } from "./type";
 
-export function* getBooks() {
+export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
   try {
     const criteria: BookSelectCriteria = yield select(
       (state: RootState) => state.books.criteria,
@@ -20,42 +20,37 @@ export function* getBooks() {
 
     const result: GetBooksResult = yield call(GoogleBookApi.getBooks, criteria);
 
+    // TODO: check it
+    /* if (result.error) {
+      
+    } */
+
+    if (action.payload?.loadMore) {
+      /// we don't use the new total items due to the fact that it is not valid -_-
+      yield put({
+        type: appendBooksAction.type,
+        payload: { books: result.items },
+      });
+    } else {
+      yield put({
+        type: setBooksAction.type,
+        payload: { books: result.items, totalCount: result.totalItems },
+      });
+    }
+
     yield put({
-      type: setBooksAction.type,
-      payload: { books: result.items, totalCount: result.totalItems },
-    });
-    yield put({
-      type: setBooksRequestStatusAction.type,
+      type: setBookRequestStatusAction.type,
       payload: { status: RequestStatusEnum.RECEIVED },
     });
   } catch (error) {
     yield put({
-      type: setBooksRequestStatusAction.type,
+      type: setBookRequestStatusAction.type,
       payload: { status: RequestStatusEnum.REQUEST_FAILED },
     });
   }
 }
 
-export function* loadInitialBooks() {
-  const criteria: BookSelectCriteria = yield select(
-    (state: RootState) => state.books.criteria,
-  );
-
-  yield put({
-    type: requestBooksAction.type,
-    payload: {
-      criteria,
-    },
-  });
-}
-
 // TODO: remove any
 export function* watchBooksRequest(): any {
-  yield all([
-    yield fork(loadInitialBooks),
-    yield takeLatest(requestBooksAction.type, getBooks),
-    yield takeLatest(setBooksSortByAction.type, getBooks),
-    yield takeLatest(setBookCategoryFilterAction.type, getBooks),
-    yield takeLatest(loadMoreBooksAction.type, getBooks),
-  ]);
+  yield takeLatest(requestBooksAction.type, getBooks);
 }

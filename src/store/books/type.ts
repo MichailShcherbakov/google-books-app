@@ -25,11 +25,12 @@ export type BookSelectCriteria = {
   filterBy: CategoryFilterEnum;
   sortBy: SortByEnum;
   startIndex: number;
-  maxResults: number;
+  pageSize: number;
 };
 
 export type Book = {
   id: string;
+  etag: string;
   volumeInfo: {
     authors?: string[];
     averageRating: number;

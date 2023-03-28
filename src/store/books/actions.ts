@@ -1,31 +1,41 @@
 import { createAction } from "@reduxjs/toolkit";
-import {
-  Book,
-  BookSelectCriteria,
-  CategoryFilterEnum,
-  RequestStatusEnum,
-  SortByEnum,
-} from "./type";
+import { Book, BookSelectCriteria, RequestStatusEnum } from "./type";
 
-export const setBooksRequestStatusAction = createAction<{
+/**
+ * @private
+ */
+export const setBookRequestStatusAction = createAction<{
   status: RequestStatusEnum;
-}>("setBooksRequestStatusAction");
+}>("setBookRequestStatusAction");
 
-export const requestBooksAction = createAction<{
-  criteria: BookSelectCriteria;
-}>("requestBooksAction");
+export type RequestBooksActionOptions = {
+  loadMore?: boolean;
+};
+
+export const requestBooksAction = createAction<
+  RequestBooksActionOptions | undefined
+>("requestBooksAction");
 
 export const setBooksAction = createAction<{
   books: Book[];
   totalCount: number;
 }>("setBooksAction");
 
-export const setBooksSortByAction = createAction<{
-  sortBy: SortByEnum;
-}>("setBooksSortByAction");
+export const appendBooksAction = createAction<{
+  books: Book[];
+  totalCount: number;
+}>("appendBooksAction");
 
-export const setBookCategoryFilterAction = createAction<{
-  filterBy: CategoryFilterEnum;
-}>("setBookCategoryFilterAction");
+export const setBookSearchPatternAction = createAction<{
+  pattern: BookSelectCriteria["pattern"];
+}>("setBookSearchPatternAction");
+
+export const setBookSearchSortByAction = createAction<{
+  sortBy: BookSelectCriteria["sortBy"];
+}>("setBookSearchSortBy");
+
+export const setBookSearchFilterByAction = createAction<{
+  filterBy: BookSelectCriteria["filterBy"];
+}>("setBookSearchFilterByAction");
 
 export const loadMoreBooksAction = createAction("loadMoreBooksAction");

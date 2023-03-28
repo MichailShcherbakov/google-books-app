@@ -1,9 +1,9 @@
 import Chip from "@mui/material/Chip/Chip";
 import { alpha } from "@mui/material/styles";
-import { useSelectBooksInfo } from "~/store/books/hooks";
+import { useCurrentBookSearchInfo } from "~/store/books/hooks";
 
 export function BooksIndicator() {
-  const { totalCount } = useSelectBooksInfo();
+  const { totalCount } = useCurrentBookSearchInfo();
 
   return (
     <Chip
