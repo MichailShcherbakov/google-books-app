@@ -12,18 +12,10 @@ export function BookThumbnail({ src, alt, ...props }: BookThumbnailProps) {
     <Stack
       {...props}
       sx={theme => ({
-        width: theme.spacing(16),
-        height: theme.spacing(24),
-
-        "& > img": {
-          width: theme.spacing(16),
-          height: theme.spacing(24),
+        "& > *": {
+          width: theme.spacing(21.75),
+          height: theme.spacing(28),
           borderRadius: theme.spacing(1),
-        },
-
-        "& > svg": {
-          width: theme.spacing(16),
-          height: theme.spacing(24),
           color: grey[400],
         },
       })}

@@ -7,7 +7,7 @@ export function SearchPage() {
   return (
     <SearchLayout>
       <AppBar />
-      <Stack direction="column" p={4} height="100%">
+      <Stack direction="column" p={4}>
         <BookContainer />
       </Stack>
     </SearchLayout>

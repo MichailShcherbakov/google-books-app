@@ -10,18 +10,21 @@ export const BookCardLayout = styled("div")(({ theme }) => ({
 
   alignItems: "center",
 
-  width: "100%",
+  width: theme.spacing(28),
   height: "100%",
 
-  padding: theme.spacing(1.5),
+  padding: theme.spacing(3),
 
-  gap: theme.spacing(1.5),
+  gap: theme.spacing(2),
 
   cursor: "pointer",
 
   borderWidth: 1,
   borderStyle: "solid",
   borderColor: "transparent",
+
+  background: theme.palette.common.white,
+  borderRadius: theme.spacing(1),
 
   "&:hover": {
     borderColor: theme.palette.primary.main,
