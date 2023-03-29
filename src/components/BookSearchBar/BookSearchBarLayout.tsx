@@ -1,14 +1,13 @@
-import { styled } from "@mui/material";
+import { Box, BoxProps, styled } from "@mui/material";
 
-export interface BookSearchBarLayoutProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface BookSearchBarLayoutProps extends BoxProps {
   /**
    * @default "medium"
    */
   size?: "small" | "medium";
 }
 
-export const BookSearchBarLayout = styled("div", {
+export const BookSearchBarLayout = styled(Box, {
   shouldForwardProp: propName => propName !== "variant",
 })<BookSearchBarLayoutProps>(({ theme, size = "medium" }) => ({
   position: "relative",

@@ -1,11 +1,11 @@
 import { useAppSelector } from "~/store/hooks";
 import { RequestStatusEnum } from "../type";
-import { useBookSearchParamSync } from "./useBookSearchParamSync";
+import { useSyncBookCriteriaWithSearchParam } from "./useSyncBookCriteriaWithSearchParam";
 
 export function useBooks() {
   const books = useAppSelector(state => state.books.all);
 
-  useBookSearchParamSync();
+  useSyncBookCriteriaWithSearchParam();
 
   const isLoading = useAppSelector(
     state => state.books.status === RequestStatusEnum.REQUESTED,

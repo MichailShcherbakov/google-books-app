@@ -7,7 +7,7 @@ import { useCurrentBookSearchPattern } from "./useCurrentBookSearchPattern";
 import { useCurrentBookSearchSortBy } from "./useCurrentBookSearchSortBy";
 import { useRequestBooks } from "./useRequestBooks";
 
-export function useBookSearchParamSync() {
+export function useSyncBookCriteriaWithSearchParam() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const isBookCriteriaSyncWithSearchParams = React.useRef(false);

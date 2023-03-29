@@ -1,11 +1,10 @@
-import { styled } from "@mui/material";
+import { Box, BoxProps, styled } from "@mui/material";
 
-export interface AppBarSectionProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface AppBarSectionProps extends BoxProps {
   inline?: boolean;
 }
 
-export const AppBarSection = styled("div", {
+export const AppBarSection = styled(Box, {
   shouldForwardProp: propName => propName !== "inline",
 })<AppBarSectionProps>(({ theme, inline }) => ({
   display: "flex",
@@ -18,4 +17,8 @@ export const AppBarSection = styled("div", {
   gap: theme.spacing(2),
 
   padding: theme.spacing(0, 4),
+
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(0, 2),
+  },
 }));

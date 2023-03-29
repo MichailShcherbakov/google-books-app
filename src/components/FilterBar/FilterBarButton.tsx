@@ -16,6 +16,10 @@ export const FilterBarButtonBase = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
 
+  height: theme.spacing(5),
+
+  minWidth: theme.spacing(6),
+
   borderRadius: theme.shape.borderRadius,
 
   padding: theme.spacing(0.5, 2, 0.5, 1),
@@ -25,6 +29,13 @@ export const FilterBarButtonBase = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.primary.main, 0.9),
   },
+
+  [theme.breakpoints.down("lg")]: {
+    alignItems: "center",
+    justifyContent: "center",
+
+    padding: 0,
+  },
 }));
 
 export interface FilterBarButton extends ButtonProps {}
@@ -33,14 +44,18 @@ export function FilterBarButton(props: FilterBarButton) {
   return (
     <FilterBarButtonBase {...props}>
       <FilterBarButtonIconLayout>
-        <FilterAltOutlinedIcon />
+        <FilterAltOutlinedIcon fontSize="small" />
       </FilterBarButtonIconLayout>
       <Typography
         component="span"
         variant="button"
-        sx={{
+        sx={theme => ({
           marginTop: "1px",
-        }}
+
+          [theme.breakpoints.down("lg")]: {
+            display: "none",
+          },
+        })}
       >
         Filters
       </Typography>

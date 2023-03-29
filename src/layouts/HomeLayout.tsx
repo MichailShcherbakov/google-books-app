@@ -6,12 +6,16 @@ export const HomeLayout = styled("div")(({ theme }) => ({
 
   alignItems: "center",
 
-  width: "100vw",
-  height: "100vh",
+  width: "100%",
+  height: "100%",
 
   overflow: "hidden",
 
   gap: theme.spacing(4),
 
   padding: theme.spacing(12, 4, 0, 4),
+
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(12, 2, 0, 2),
+  },
 }));

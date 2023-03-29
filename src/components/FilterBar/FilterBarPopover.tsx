@@ -26,6 +26,10 @@ export function FilterBarPopover(props: FilterBarPopoverProps) {
         sx={theme => ({
           width: theme.spacing(44),
           padding: theme.spacing(3),
+
+          [theme.breakpoints.down("sm")]: {
+            width: theme.spacing(32),
+          },
         })}
       >
         <Typography component="p" variant="h6">
