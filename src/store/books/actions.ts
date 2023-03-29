@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { Book, BookSelectCriteria, RequestStatusEnum } from "./type";
+import { Book, BookSearchCriteria, RequestStatusEnum } from "./type";
 
 /**
  * @private
@@ -27,15 +27,15 @@ export const appendBooksAction = createAction<{
 }>("appendBooksAction");
 
 export const setBookSearchPatternAction = createAction<{
-  pattern: BookSelectCriteria["pattern"];
+  pattern: BookSearchCriteria["pattern"];
 }>("setBookSearchPatternAction");
 
 export const setBookSearchSortByAction = createAction<{
-  sortBy: BookSelectCriteria["sortBy"];
+  sortBy: BookSearchCriteria["sortBy"];
 }>("setBookSearchSortBy");
 
 export const setBookSearchFilterByAction = createAction<{
-  filterBy: BookSelectCriteria["filterBy"];
+  filterBy: BookSearchCriteria["filterBy"];
 }>("setBookSearchFilterByAction");
 
 export const loadMoreBooksAction = createAction("loadMoreBooksAction");

@@ -1,6 +1,7 @@
 export enum RequestStatusEnum {
   IDLE = "IDLE",
   REQUESTED = "REQUESTED",
+  REQUESTED_MORE = "REQUESTED_MORE",
   RECEIVED = "RECEIVED",
   REQUEST_FAILED = "REQUEST_FAILED",
 }
@@ -20,7 +21,7 @@ export enum CategoryFilterEnum {
   POETRY = "poetry",
 }
 
-export type BookSelectCriteria = {
+export type BookSearchCriteria = {
   pattern: string;
   filterBy: CategoryFilterEnum;
   sortBy: SortByEnum;

@@ -1,56 +1,40 @@
-import { Divider, Stack, Typography } from "@mui/material";
-import { StackProps } from "@mui/system";
-import { ReactComponent as LogoIcon } from "~/assets/icons/logo.svg";
 import { FilterBar } from "../FilterBar";
 import { BookSearchBar } from "../BookSearchBar";
+import { AppBarLayout, AppBarLayoutProps } from "./AppBarLayout";
+import { Logo } from "../Logo";
+import { AppBarSection } from "./AppBarSection";
+import { useCurrentBookSearchPattern } from "~/store/books/hooks";
+import React from "react";
 
-export interface AppBarProps extends StackProps {}
+export interface AppBarProps extends AppBarLayoutProps {}
 
 export function AppBar(props: AppBarProps) {
+  const { pattern: currentPattern, setPattern: setCurrentPattern } =
+    useCurrentBookSearchPattern();
+
+  const [pattern, setPattern] = React.useState("");
+
+  React.useEffect(() => {
+    setPattern(currentPattern);
+  }, [currentPattern]);
+
   return (
-    <Stack
-      {...props}
-      direction="row"
-      alignItems="center"
-      sx={theme => ({
-        position: "sticky",
-        top: 0,
-        left: 0,
-        flexShrink: 0,
-        height: theme.spacing(10),
-        paddingX: theme.spacing(4),
-        borderBottom: `1px solid ${theme.palette.divider}`,
-        background: theme.palette.background.default,
-      })}
-    >
-      <Stack direction="row" alignItems="center" gap={2}>
-        <Stack
-          sx={theme => ({
-            width: theme.spacing(6),
-            height: theme.spacing(6),
-          })}
-        >
-          <LogoIcon />
-        </Stack>
-        <Typography component="span" variant="h6">
-          Bukstore
-        </Typography>
-      </Stack>
-      <Divider orientation="vertical" variant="inset" />
-      <Stack
-        direction="row"
-        alignItems="center"
-        sx={theme => ({
-          width: "100%",
-          paddingX: theme.spacing(2),
-        })}
-        gap={2}
-      >
+    <AppBarLayout {...props}>
+      <AppBarSection>
+        <Logo withSlogan={false}></Logo>
+      </AppBarSection>
+      <AppBarSection>
         <FilterBar />
-        <BookSearchBar />
-      </Stack>
-      <Divider orientation="vertical" variant="inset" />
-      <Stack direction="row" alignItems="center"></Stack>
-    </Stack>
+        <BookSearchBar
+          size="small"
+          pattern={pattern}
+          onPatternChange={setPattern}
+          onBooksRequest={pattern => {
+            setCurrentPattern(pattern);
+          }}
+        />
+      </AppBarSection>
+      <AppBarSection></AppBarSection>
+    </AppBarLayout>
   );
 }

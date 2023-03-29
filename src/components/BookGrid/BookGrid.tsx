@@ -1,14 +1,14 @@
 import { Grid, GridProps } from "@mui/material";
-import { useBooks } from "~/store/books/hooks";
+import { Book } from "~/store/books/type";
 import { BookCard } from "../BookCard";
 
-export interface BookGridProps extends GridProps {}
+export interface BookGridProps extends GridProps {
+  books: Book[];
+}
 
-export function BookGrid() {
-  const { books } = useBooks();
-
+export function BookGrid({ books, ...props }: BookGridProps) {
   return (
-    <Grid container spacing={2}>
+    <Grid {...props} container spacing={2}>
       {books.map(book => (
         <Grid item key={book.etag} xs={12} sm={6} md={3} lg={2}>
           <BookCard book={book} />

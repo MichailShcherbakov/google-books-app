@@ -10,7 +10,9 @@ export function useLoadMoreBooks() {
     state => state.books.all.length < state.books.totalCount,
   );
   const isLoading = useAppSelector(
-    state => state.books.status === RequestStatusEnum.REQUESTED,
+    state =>
+      state.books.status === RequestStatusEnum.REQUESTED ||
+      state.books.status === RequestStatusEnum.REQUESTED_MORE,
   );
 
   const { requestBooks } = useRequestBooks();

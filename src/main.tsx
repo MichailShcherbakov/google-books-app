@@ -12,7 +12,7 @@ import "@fontsource/roboto/700.css";
 const root = document.getElementById("root") as HTMLElement;
 
 ReactDOM.createRoot(root).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  //TODO: remove it <React.StrictMode>
+  <App />,
+  // </React.StrictMode>,
 );

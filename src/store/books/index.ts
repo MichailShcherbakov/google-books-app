@@ -11,7 +11,7 @@ import {
 } from "./actions";
 import {
   Book,
-  BookSelectCriteria,
+  BookSearchCriteria,
   CategoryFilterEnum,
   RequestStatusEnum,
   SortByEnum,
@@ -20,7 +20,7 @@ import {
 export type BookState = {
   all: Array<Book>;
   totalCount: number;
-  criteria: BookSelectCriteria;
+  criteria: BookSearchCriteria;
   status: RequestStatusEnum;
 };
 
@@ -46,8 +46,6 @@ const bookSlice = createSlice({
       .addCase(setBooksAction, (state, action) => {
         state.totalCount = action.payload.totalCount;
         state.all = action.payload.books ?? [];
-
-        console.log(state.all.map(a => a.volumeInfo.publishedDate));
       })
       .addCase(appendBooksAction, (state, action) => {
         state.all.push(...action.payload.books);
@@ -55,8 +53,12 @@ const bookSlice = createSlice({
       .addCase(setBookRequestStatusAction, (state, action) => {
         state.status = action.payload.status;
       })
-      .addCase(requestBooksAction, state => {
-        state.status = RequestStatusEnum.REQUESTED;
+      .addCase(requestBooksAction, (state, action) => {
+        if (action.payload?.loadMore) {
+          state.status = RequestStatusEnum.REQUESTED_MORE;
+        } else {
+          state.status = RequestStatusEnum.REQUESTED;
+        }
       })
       .addCase(setBookSearchPatternAction, (state, action) => {
         state.criteria.pattern = action.payload.pattern;

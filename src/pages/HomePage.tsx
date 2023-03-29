@@ -1,31 +1,25 @@
-import { Stack } from "@mui/material";
-import { BookGrid } from "~/components/BookGrid";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { BookSearchBar } from "~/components/BookSearchBar";
-import { LoadMoreBooksButton } from "~/components/LoadMoreBooksButton";
 import { Logo } from "~/components/Logo";
+import { HomeLayout } from "~/layouts/HomeLayout";
 
 export function HomePage() {
+  const navigate = useNavigate();
+  const [pattern, setPattern] = React.useState("");
+
+  function onBooksRequestHandler(pattern: string) {
+    navigate(`/search?q=${pattern}`);
+  }
+
   return (
-    <Stack
-      direction="column"
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-      }}
-      gap={2}
-    >
-      <Logo />
-      <Stack
-        sx={theme => ({
-          padding: theme.spacing(2),
-        })}
-        gap={4}
-      >
-        <BookSearchBar />
-      </Stack>
-    </Stack>
+    <HomeLayout>
+      <Logo isNavigatable={false} />
+      <BookSearchBar
+        pattern={pattern}
+        onPatternChange={setPattern}
+        onBooksRequest={onBooksRequestHandler}
+      />
+    </HomeLayout>
   );
 }

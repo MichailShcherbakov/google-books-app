@@ -8,7 +8,12 @@ export const theme = createTheme({
     },
   },
   typography: {
+    h5: {
+      fontWeight: 500,
+      lineHeight: "normal",
+    },
     h6: {
+      fontWeight: 500,
       lineHeight: "normal",
     },
     body2: {

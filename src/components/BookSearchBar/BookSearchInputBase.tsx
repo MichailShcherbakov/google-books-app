@@ -4,7 +4,7 @@ export const BookSearchInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
 
   width: "100%",
-  height: theme.spacing(6),
+  height: "100%",
 
   borderWidth: 1,
   borderStyle: "solid",

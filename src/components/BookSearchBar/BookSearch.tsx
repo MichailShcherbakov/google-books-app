@@ -5,26 +5,28 @@ import {
 } from "./BookSearchBarLayout";
 import { BookSearchInputBase } from "./BookSearchInputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  useCurrentBookSearchPattern,
-  useRequestBooks,
-} from "~/store/books/hooks";
 import { Typography } from "@mui/material";
 import { BookSearchInputIconLayout } from "./BookSearchInputIconLayout";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-export interface BookSearchBarProps extends BookSearchBarLayoutProps {}
+export interface BookSearchBarProps extends BookSearchBarLayoutProps {
+  pattern: string;
+  onPatternChange?: (pattern: string) => void;
+  onBooksRequest?: (pattern: string) => void;
+}
 
-export function BookSearchBar(props: BookSearchBarProps) {
-  const { requestBooks } = useRequestBooks();
-  const { pattern, setPattern } = useCurrentBookSearchPattern();
-
+export function BookSearchBar({
+  pattern,
+  onPatternChange,
+  onBooksRequest,
+  ...props
+}: BookSearchBarProps) {
   function changePatternHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setPattern(e.target.value);
+    onPatternChange?.(e.target.value);
   }
 
   function requestBooksHandler() {
-    requestBooks();
+    onBooksRequest?.(pattern);
   }
 
   function keyUpHandler(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -45,6 +47,7 @@ export function BookSearchBar(props: BookSearchBarProps) {
         onKeyUp={keyUpHandler}
       />
       <BookSearchBarButton
+        size={props.size}
         onClick={requestBooksHandler}
         endIcon={
           <KeyboardBackspaceIcon
@@ -55,6 +58,7 @@ export function BookSearchBar(props: BookSearchBarProps) {
         }
       >
         <Typography
+          component="span"
           variant="button"
           sx={{
             marginTop: "1px",

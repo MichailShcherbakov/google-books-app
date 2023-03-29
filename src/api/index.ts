@@ -1,11 +1,11 @@
-import { BookSelectCriteria, CategoryFilterEnum } from "~/store/books/type";
+import { BookSearchCriteria, CategoryFilterEnum } from "~/store/books/type";
 import { EndPointBuilder } from "./helpers/EndPointBuilder";
 import { normalizeSearchParam } from "./helpers/normalizeSearchParam";
 import { QueryBuilder } from "./helpers/QueryBuilder";
 import { GetBooksResult } from "./type";
 
 export const GoogleBookApi = {
-  async getBooks(options: BookSelectCriteria): Promise<GetBooksResult> {
+  async getBooks(options: BookSearchCriteria): Promise<GetBooksResult> {
     const { pattern, sortBy, filterBy, startIndex, pageSize } = options;
 
     const normalizedPattern = normalizeSearchParam(pattern);

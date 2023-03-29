@@ -1,9 +1,16 @@
 import { styled } from "@mui/material";
 
 export interface BookSearchBarLayoutProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+  extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * @default "medium"
+   */
+  size?: "small" | "medium";
+}
 
-export const BookSearchBarLayout = styled("div")(({ theme }) => ({
+export const BookSearchBarLayout = styled("div", {
+  shouldForwardProp: propName => propName !== "variant",
+})<BookSearchBarLayoutProps>(({ theme, size = "medium" }) => ({
   position: "relative",
 
   display: "flex",
@@ -12,6 +19,14 @@ export const BookSearchBarLayout = styled("div")(({ theme }) => ({
   alignItems: "center",
 
   width: theme.spacing(80),
+
+  ...(size === "small" && {
+    height: theme.spacing(5),
+  }),
+
+  ...(size === "medium" && {
+    height: theme.spacing(6),
+  }),
 
   gap: theme.spacing(1),
 

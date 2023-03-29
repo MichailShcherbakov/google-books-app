@@ -10,11 +10,11 @@ import {
   setBookRequestStatusAction,
   setBooksAction,
 } from "./actions";
-import { BookSelectCriteria, RequestStatusEnum } from "./type";
+import { BookSearchCriteria, RequestStatusEnum } from "./type";
 
 export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
   try {
-    const criteria: BookSelectCriteria = yield select(
+    const criteria: BookSearchCriteria = yield select(
       (state: RootState) => state.books.criteria,
     );
 
