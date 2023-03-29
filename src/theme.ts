@@ -8,7 +8,14 @@ export const theme = createTheme({
     },
   },
   typography: {
+    h6: {
+      lineHeight: "normal",
+    },
     body2: {
+      lineHeight: "normal",
+    },
+    button: {
+      textTransform: "none",
       lineHeight: "normal",
     },
   },

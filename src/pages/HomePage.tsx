@@ -1,43 +1,30 @@
 import { Stack } from "@mui/material";
-import { AppBar } from "~/components/AppBar";
 import { BookGrid } from "~/components/BookGrid";
-import { BooksIndicator } from "~/components/BooksIndicator";
+import { BookSearchBar } from "~/components/BookSearchBar";
 import { LoadMoreBooksButton } from "~/components/LoadMoreBooksButton";
+import { Logo } from "~/components/Logo";
 
 export function HomePage() {
   return (
     <Stack
       direction="column"
       sx={{
-        width: "100%",
+        width: "100vw",
         height: "100vh",
-        overflow: "auto",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
       }}
+      gap={2}
     >
-      <AppBar />
+      <Logo />
       <Stack
         sx={theme => ({
-          padding: theme.spacing(4),
+          padding: theme.spacing(2),
         })}
         gap={4}
       >
-        <Stack
-          width="100%"
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <BooksIndicator />
-        </Stack>
-        <BookGrid />
-        <Stack
-          width="100%"
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <LoadMoreBooksButton />
-        </Stack>
+        <BookSearchBar />
       </Stack>
     </Stack>
   );
