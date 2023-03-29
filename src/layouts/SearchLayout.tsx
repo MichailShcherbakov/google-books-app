@@ -7,6 +7,4 @@ export const SearchLayout = styled("div")(() => ({
   height: "100%",
 
   minHeight: "100vh",
-
-  overflow: "auto",
 }));

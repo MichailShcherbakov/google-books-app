@@ -17,8 +17,6 @@ export const AppBarLayout = styled("div")(({ theme }) => ({
   width: "100%",
   height: theme.spacing(10),
 
-  paddingX: theme.spacing(4),
-
   borderBottom: `1px solid ${theme.palette.divider}`,
 
   background: theme.palette.background.default,
