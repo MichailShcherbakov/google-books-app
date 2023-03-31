@@ -1,0 +1,34 @@
+# GitHub
+.github/
+
+# Ansible
+ansible/
+
+# Nginx
+nginx/
+
+# Builds
+.next/
+
+# Node modules
+node_modules/
+
+# Coverage
+coverage/
+
+# Env
+.env.*
+
+# Git
+.git
+.gitignore
+
+# Docker
+dockerfile*
+docker-compose*
+.dockerignore*
+
+# Configs
+.editorconfig
+jest.config.js
+README.md
