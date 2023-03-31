@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { AppBar } from "~/components/AppBar";
+import { BookNotFoundStub } from "~/components/BookContainer/BookNotFoundStub";
 import { BookOverview } from "~/components/BookOverview";
 import AppPage from "~/interfaces/app-page.interface";
 import { SearchLayout } from "~/layouts/SearchLayout";
@@ -12,15 +13,19 @@ export const BookPage: AppPage = props => {
 
   const { book } = useCurrentBook();
 
+  const bookTitle = book?.volumeInfo.title;
+  const pageTitle = `Bukstore - Google Book API Provider${
+    bookTitle ? ` - ${bookTitle}` : ""
+  }`;
+
   return (
     <>
       <Head>
-        <title>
-          Bukstore - Google Book API Provider - {book?.volumeInfo.title}{" "}
-        </title>
+        <title>{pageTitle}</title>
       </Head>
       <AppBar withFilter={false} />
-      <BookOverview />
+      {!book && <BookNotFoundStub />}
+      {book && <BookOverview />}
     </>
   );
 };

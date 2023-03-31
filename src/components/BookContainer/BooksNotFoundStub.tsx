@@ -2,9 +2,14 @@ import { Stack, StackProps, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import SearchIcon from "~/assets/icons/search.svg";
 
-export interface BookNotFoundStubProps extends StackProps {}
+export interface BooksNotFoundStubProps extends StackProps {
+  pattern: string;
+}
 
-export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
+export function BooksNotFoundStub({
+  pattern,
+  ...props
+}: BooksNotFoundStubProps) {
   return (
     <Stack
       {...props}
@@ -26,7 +31,7 @@ export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
       </Stack>
       <Stack direction="column" alignItems="center" gap={1}>
         <Typography component="p" variant="h6">
-          The book is not found
+          No books found
         </Typography>
         <Stack direction="column" alignItems="center" gap={0.5}>
           <Typography
@@ -36,7 +41,7 @@ export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
               color: grey[600],
             }}
           >
-            {"We can't find the book you're looking for."}
+            {`"${pattern}"`} did not match any books.
           </Typography>
           <Typography
             component="p"
@@ -45,8 +50,7 @@ export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
               color: grey[600],
             }}
           >
-            You can either visit our homepage, or search using the search box
-            above.
+            Try more general keywords.
           </Typography>
         </Stack>
       </Stack>

@@ -1,10 +1,10 @@
 import { Stack, StackProps, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import SearchIcon from "~/assets/icons/search.svg";
 
-export interface BookNotFoundStubProps extends StackProps {}
+export interface BookSearchErrorStubProps extends StackProps {}
 
-export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
+export function BookSearchErrorStub({ ...props }: BookSearchErrorStubProps) {
   return (
     <Stack
       {...props}
@@ -19,14 +19,14 @@ export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
         sx={theme => ({
           width: theme.spacing(10),
           height: theme.spacing(10),
-          color: theme.palette.primary.main,
+          color: red[400],
         })}
       >
         <SearchIcon />
       </Stack>
       <Stack direction="column" alignItems="center" gap={1}>
         <Typography component="p" variant="h6">
-          The book is not found
+          Oh nooo!
         </Typography>
         <Stack direction="column" alignItems="center" gap={0.5}>
           <Typography
@@ -36,7 +36,7 @@ export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
               color: grey[600],
             }}
           >
-            {"We can't find the book you're looking for."}
+            Something went wrong.
           </Typography>
           <Typography
             component="p"
@@ -45,8 +45,7 @@ export function BookNotFoundStub({ ...props }: BookNotFoundStubProps) {
               color: grey[600],
             }}
           >
-            You can either visit our homepage, or search using the search box
-            above.
+            Refresh the page or try again later.
           </Typography>
         </Stack>
       </Stack>

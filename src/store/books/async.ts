@@ -1,7 +1,12 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { GoogleBookApi } from "~/api";
-import { GetBookResult, GetBooksResult } from "~/api/type";
+import {
+  GetBookResult,
+  GetBookResultFail,
+  GetBooksResult,
+  GetBooksResultFail,
+} from "~/api/type";
 import { RootState } from "..";
 import {
   appendBooksAction,
@@ -20,12 +25,19 @@ export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
       (state: RootState) => state.books.criteria,
     );
 
-    const result: GetBooksResult = yield call(GoogleBookApi.getBooks, criteria);
+    const result: GetBooksResult | GetBooksResultFail = yield call(
+      GoogleBookApi.getBooks,
+      criteria,
+    );
 
-    // TODO: check it
-    /* if (result.error) {
-      
-    } */
+    if (result.error) {
+      yield put({
+        type: setBookRequestStatusAction.type,
+        payload: { status: RequestStatusEnum.REQUEST_FAILED },
+      });
+
+      return;
+    }
 
     if (action.payload?.loadMore) {
       /// we don't use the new total items due to the fact that it is not valid
@@ -57,15 +69,19 @@ export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
 
 export function* getBook(action: PayloadAction<{ bookId: string }>) {
   try {
-    const result: GetBookResult = yield call(
+    const result: GetBookResult | GetBookResultFail = yield call(
       GoogleBookApi.getBook,
       action.payload.bookId,
     );
 
-    // TODO: check it
-    /* if (result.error) {
-      
-    } */
+    if (result.error) {
+      yield put({
+        type: setBookRequestStatusAction.type,
+        payload: { status: RequestStatusEnum.REQUEST_FAILED },
+      });
+
+      return;
+    }
 
     yield put({
       type: setCurrentBookAction.type,
@@ -86,8 +102,7 @@ export function* getBook(action: PayloadAction<{ bookId: string }>) {
   }
 }
 
-// TODO: remove any
-export function* watchBooksRequest(): any {
+export function* watchBooksRequest() {
   yield all([
     takeLatest(requestBooksAction.type, getBooks),
     takeLatest(requestBookAction.type, getBook),
