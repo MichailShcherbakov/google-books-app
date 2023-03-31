@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { BookSearchBar } from "~/components/BookSearchBar";
@@ -15,6 +16,9 @@ export const HomePage: AppPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Bukstore - Google Book API Provider</title>
+      </Head>
       <Logo isNavigatable={false} />
       <BookSearchBar
         pattern={pattern}

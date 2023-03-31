@@ -1,4 +1,5 @@
 import { Stack } from "@mui/material";
+import Head from "next/head";
 import { AppBar } from "~/components/AppBar";
 import { BookContainer } from "~/components/BookContainer";
 import AppPage from "~/interfaces/app-page.interface";
@@ -15,6 +16,9 @@ export const SearchPage: AppPage = props => {
 
   return (
     <>
+      <Head>
+        <title>Bukstore - Google Book API Provider</title>
+      </Head>
       <AppBar />
       <Stack direction="column" p={4}>
         <BookContainer />

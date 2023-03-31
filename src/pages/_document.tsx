@@ -5,8 +5,9 @@ import createEmotionServer from "@emotion/server/create-instance";
 export default class RootDocument extends Document {
   render() {
     return (
-      <Html lang="ru">
+      <Html lang="en">
         <Head>
+          <meta charSet="UTF-8" />
           <link rel="shortcut icon" href="/logo.svg" />
           <meta name="emotion-insertion-point" content="" />
           {(this.props as any).emotionStyleTags}
