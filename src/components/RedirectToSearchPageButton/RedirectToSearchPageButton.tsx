@@ -1,20 +1,20 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, ButtonProps } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 export interface RedirectToSearchPageButtonProps extends ButtonProps {}
 
 export function RedirectToSearchPageButton(
   props: RedirectToSearchPageButtonProps,
 ) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <Button
       {...props}
       variant="contained"
       color="primary"
-      onClick={() => navigate("/")}
+      onClick={() => router.push("/")}
       sx={theme => ({
         width: theme.spacing(6),
         height: theme.spacing(5),

@@ -1,20 +1,19 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "~/store/hooks";
-import { setBookSearchPatternAction } from "../actions";
+import { useAppSelector } from "~/store/hooks";
+import { useBookSearchCriteria } from "./useBookSearchCriteria";
 
 export function useCurrentBookSearchPattern() {
-  const dispatch = useAppDispatch();
   const pattern = useAppSelector(state => state.books.criteria.pattern);
+
+  const { setCriteria } = useBookSearchCriteria();
 
   const setPattern = React.useCallback(
     (pattern: string) => {
-      dispatch(
-        setBookSearchPatternAction({
-          pattern,
-        }),
-      );
+      setCriteria({
+        pattern,
+      });
     },
-    [dispatch],
+    [setCriteria],
   );
 
   return { pattern, setPattern };

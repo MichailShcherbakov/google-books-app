@@ -1,4 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
+import { BookState } from ".";
 import { Book, BookSearchCriteria, RequestStatusEnum } from "./type";
 
 /**
@@ -7,6 +9,11 @@ import { Book, BookSearchCriteria, RequestStatusEnum } from "./type";
 export const setBookRequestStatusAction = createAction<{
   status: RequestStatusEnum;
 }>("setBookRequestStatusAction");
+
+/**
+ * @private
+ */
+export const hydrateAction = createAction<{ books: BookState }>(HYDRATE);
 
 export type RequestBooksActionOptions = {
   loadMore?: boolean;
@@ -26,16 +33,6 @@ export const appendBooksAction = createAction<{
   totalCount: number;
 }>("appendBooksAction");
 
-export const setBookSearchPatternAction = createAction<{
-  pattern: BookSearchCriteria["pattern"];
-}>("setBookSearchPatternAction");
-
-export const setBookSearchSortByAction = createAction<{
-  sortBy: BookSearchCriteria["sortBy"];
-}>("setBookSearchSortBy");
-
-export const setBookSearchFilterByAction = createAction<{
-  filterBy: BookSearchCriteria["filterBy"];
-}>("setBookSearchFilterByAction");
-
-export const loadMoreBooksAction = createAction("loadMoreBooksAction");
+export const setBookSearchCriteriaAction = createAction<{
+  criteria: Partial<BookSearchCriteria>;
+}>("setBookSearchCriteriaAction");

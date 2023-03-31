@@ -1,6 +1,4 @@
-import { Popover, PopoverProps } from "@mui/material";
-import Stack from "@mui/material/Stack/Stack";
-import Typography from "@mui/material/Typography/Typography";
+import { Popover, PopoverProps, Stack, Typography } from "@mui/material";
 import { CategoryFilterSelect } from "./CategoryFilterSelect";
 import { SortBySelect } from "./SortBySelect";
 

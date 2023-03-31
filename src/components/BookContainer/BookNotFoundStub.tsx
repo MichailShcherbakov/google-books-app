@@ -1,6 +1,6 @@
 import { Stack, StackProps, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { ReactComponent as SearchIcon } from "~/assets/icons/search.svg";
+import SearchIcon from "~/assets/icons/search.svg";
 
 export interface BookNotFoundStub extends StackProps {
   pattern: string;

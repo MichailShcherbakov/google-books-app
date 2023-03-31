@@ -1,25 +1,32 @@
+import { useRouter } from "next/router";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { BookSearchBar } from "~/components/BookSearchBar";
 import { Logo } from "~/components/Logo";
+import AppPage from "~/interfaces/app-page.interface";
 import { HomeLayout } from "~/layouts/HomeLayout";
 
-export function HomePage() {
-  const navigate = useNavigate();
+export const HomePage: AppPage = () => {
+  const router = useRouter();
   const [pattern, setPattern] = React.useState("");
 
   function onBooksRequestHandler(pattern: string) {
-    navigate(`/search?q=${pattern}`);
+    router.push(`/search?pattern=${pattern}`);
   }
 
   return (
-    <HomeLayout>
+    <>
       <Logo isNavigatable={false} />
       <BookSearchBar
         pattern={pattern}
         onPatternChange={setPattern}
         onBooksRequest={onBooksRequestHandler}
       />
-    </HomeLayout>
+    </>
   );
-}
+};
+
+HomePage.getLayout = page => {
+  return <HomeLayout>{page}</HomeLayout>;
+};
+
+export default HomePage;

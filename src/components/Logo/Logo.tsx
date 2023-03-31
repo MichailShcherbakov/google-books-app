@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { ReactComponent as LogoIcon } from "~/assets/icons/logo.svg";
+import { useRouter } from "next/router";
+import LogoIcon from "~/assets/icons/logo.svg";
 
 export interface LogoProps {
   /**
@@ -18,7 +18,7 @@ export function Logo({
   isNavigatable = true,
   ...props
 }: LogoProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <Stack
@@ -29,7 +29,7 @@ export function Logo({
       sx={{
         cursor: isNavigatable ? "pointer" : "inherit",
       }}
-      onClick={() => isNavigatable && navigate("/")}
+      onClick={() => isNavigatable && router.push("/")}
     >
       <Stack
         sx={theme => ({

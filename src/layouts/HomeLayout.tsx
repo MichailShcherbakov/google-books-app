@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
+import { Box } from "@mui/material";
 
-export const HomeLayout = styled("div")(({ theme }) => ({
+export const HomeLayout = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
 

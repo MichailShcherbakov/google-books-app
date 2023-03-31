@@ -1,4 +1,4 @@
-import Chip from "@mui/material/Chip/Chip";
+import { Chip } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useCurrentBookSearchInfo } from "~/store/books/hooks";
 

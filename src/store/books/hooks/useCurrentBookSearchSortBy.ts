@@ -1,22 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "~/store/hooks";
-import { setBookSearchSortByAction } from "../actions";
 import { SortByEnum } from "../type";
+import { useBookSearchCriteria } from "./useBookSearchCriteria";
 
 export function useCurrentBookSearchSortBy() {
-  const dispatch = useDispatch();
   const sortBy = useAppSelector(state => state.books.criteria.sortBy);
+
+  const { setCriteria } = useBookSearchCriteria();
 
   const setSortBy = React.useCallback(
     (sortBy: SortByEnum) => {
-      dispatch(
-        setBookSearchSortByAction({
-          sortBy,
-        }),
-      );
+      setCriteria({
+        sortBy,
+      });
     },
-    [dispatch],
+    [setCriteria],
   );
 
   return {

@@ -2,7 +2,6 @@
   "name": "@MichailShcherbakov/google-books-app",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "license": "MIT",
   "author": "MichailShcherbakov <50011226+MichailShcherbakov@users.noreply.github.com>",
   "bugs": {
@@ -14,38 +13,42 @@
     "url": "git+https://github.com/MichailShcherbakov/google-books-app.git"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "lint": "eslint \"src/**/*.ts\" --fix",
-    "lint:check": "eslint \"src/**/*.ts\"",
-    "fmt": "prettier . --write",
-    "fmt:check": "prettier \"src/**/*.ts\" --check",
-    "prepare": "yarn fmt && yarn lint",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "fmt": "prettier \"src/**/*.ts\" \"src/**/*.tsx\"  --write",
+    "fmt:check": "prettier \"src/**/*.ts\" \"src/**/*.tsx\"  --check"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.11",
     "@mui/lab": "^5.0.0-alpha.124",
     "@mui/material": "^5.11.15",
     "@reduxjs/toolkit": "^1.9.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "abort-controller": "^3.0.0",
+    "cross-fetch": "^3.1.5",
+    "next": "13.2.4",
+    "next-redux-wrapper": "^9.0.0-rc.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "redux-saga": "^1.2.3"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@svgr/webpack": "^7.0.0",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.31",
+    "@types/react-dom": "18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "@vitejs/plugin-react": "^3.1.0",
-    "eslint": "^8.36.0",
+    "eslint": "8.37.0",
+    "eslint-config-next": "13.2.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
@@ -54,10 +57,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.7",
     "sass": "^1.60.0",
-    "typescript": "^4.9.3",
-    "vite": "^4.2.0",
-    "vite-plugin-svgr": "^2.4.0",
-    "vite-tsconfig-paths": "^4.0.7",
-    "vitest": "^0.29.7"
+    "typescript": "5.0.2"
   }
 }

@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   appendBooksAction,
-  loadMoreBooksAction,
+  hydrateAction,
   requestBooksAction,
   setBookRequestStatusAction,
   setBooksAction,
-  setBookSearchFilterByAction,
-  setBookSearchPatternAction,
-  setBookSearchSortByAction,
+  setBookSearchCriteriaAction,
 } from "./actions";
 import {
   Book,
@@ -43,6 +41,12 @@ const bookSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      .addCase(hydrateAction, (state, action) => {
+        return {
+          ...state,
+          ...action.payload.books,
+        };
+      })
       .addCase(setBooksAction, (state, action) => {
         state.totalCount = action.payload.totalCount;
         state.all = action.payload.books ?? [];
@@ -55,29 +59,25 @@ const bookSlice = createSlice({
       })
       .addCase(requestBooksAction, (state, action) => {
         if (action.payload?.loadMore) {
+          if (
+            state.criteria.startIndex + state.criteria.pageSize >
+            state.totalCount
+          ) {
+            return;
+          }
+
+          state.criteria.startIndex += state.criteria.pageSize;
+
           state.status = RequestStatusEnum.REQUESTED_MORE;
         } else {
           state.status = RequestStatusEnum.REQUESTED;
         }
       })
-      .addCase(setBookSearchPatternAction, (state, action) => {
-        state.criteria.pattern = action.payload.pattern;
-      })
-      .addCase(setBookSearchSortByAction, (state, action) => {
-        state.criteria.sortBy = action.payload.sortBy;
-      })
-      .addCase(setBookSearchFilterByAction, (state, action) => {
-        state.criteria.filterBy = action.payload.filterBy;
-      })
-      .addCase(loadMoreBooksAction, state => {
-        if (
-          state.criteria.startIndex + state.criteria.pageSize >
-          state.totalCount
-        ) {
-          return;
-        }
-
-        state.criteria.startIndex += state.criteria.pageSize;
+      .addCase(setBookSearchCriteriaAction, (state, action) => {
+        state.criteria = {
+          ...state.criteria,
+          ...action.payload.criteria,
+        };
       });
   },
 });

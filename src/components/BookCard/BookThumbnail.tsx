@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { Stack, StackProps } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { ReactComponent as BookIcon } from "~/assets/icons/book.svg";
+import BookIcon from "~/assets/icons/book.svg";
 
 export interface BookThumbnailProps extends StackProps {
   src?: string;
@@ -21,7 +22,7 @@ export function BookThumbnail({ src, alt, ...props }: BookThumbnailProps) {
       })}
     >
       {!src && <BookIcon />}
-      {src && <img src={src} alt={alt} />}
+      {src && <Image src={src} alt={alt} />}
     </Stack>
   );
 }

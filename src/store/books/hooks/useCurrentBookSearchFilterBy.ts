@@ -1,22 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "~/store/hooks";
-import { setBookSearchFilterByAction } from "../actions";
 import { CategoryFilterEnum } from "../type";
+import { useBookSearchCriteria } from "./useBookSearchCriteria";
 
 export function useCurrentBookSearchFilterBy() {
-  const dispatch = useDispatch();
   const filterBy = useAppSelector(state => state.books.criteria.filterBy);
+
+  const { setCriteria } = useBookSearchCriteria();
 
   const setFilterBy = React.useCallback(
     (filterBy: CategoryFilterEnum) => {
-      dispatch(
-        setBookSearchFilterByAction({
-          filterBy,
-        }),
-      );
+      setCriteria({
+        filterBy,
+      });
     },
-    [dispatch],
+    [setCriteria],
   );
 
   return {

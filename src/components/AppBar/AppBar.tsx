@@ -13,11 +13,7 @@ export function AppBar(props: AppBarProps) {
   const { pattern: currentPattern, setPattern: setCurrentPattern } =
     useCurrentBookSearchPattern();
 
-  const [pattern, setPattern] = React.useState("");
-
-  React.useEffect(() => {
-    setPattern(currentPattern);
-  }, [currentPattern]);
+  const [pattern, setPattern] = React.useState(currentPattern);
 
   return (
     <AppBarLayout {...props}>
@@ -36,9 +32,7 @@ export function AppBar(props: AppBarProps) {
           size="small"
           pattern={pattern}
           onPatternChange={setPattern}
-          onBooksRequest={pattern => {
-            setCurrentPattern(pattern);
-          }}
+          onBooksRequest={setCurrentPattern}
           sx={theme => ({
             [theme.breakpoints.down("lg")]: {
               width: theme.spacing(32),

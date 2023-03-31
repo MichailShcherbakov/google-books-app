@@ -43,6 +43,7 @@ export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
       payload: { status: RequestStatusEnum.RECEIVED },
     });
   } catch (error) {
+    console.log(error);
     yield put({
       type: setBookRequestStatusAction.type,
       payload: { status: RequestStatusEnum.REQUEST_FAILED },
