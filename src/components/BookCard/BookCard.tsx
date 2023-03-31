@@ -6,14 +6,21 @@ import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { BookCardSection } from "./BookCardSection";
 import { BookCardLayout, BookCardLayoutProps } from "./BookCardLayout";
+import { useRouter } from "next/router";
 
 export interface BookCards extends BookCardLayoutProps {
   book: Book;
 }
 
 export function BookCard({ book, ...props }: BookCards) {
+  const router = useRouter();
+
+  function onBookClickHandler() {
+    router.push(`/books/${book.id}`);
+  }
+
   return (
-    <BookCardLayout {...props}>
+    <BookCardLayout {...props} onClick={onBookClickHandler}>
       <BookThumbnail
         src={book.volumeInfo.imageLinks?.smallThumbnail}
         alt="book thumbnail"

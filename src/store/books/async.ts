@@ -1,14 +1,16 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { GoogleBookApi } from "~/api";
-import { GetBooksResult } from "~/api/type";
+import { GetBookResult, GetBooksResult } from "~/api/type";
 import { RootState } from "..";
 import {
   appendBooksAction,
+  requestBookAction,
   requestBooksAction,
   RequestBooksActionOptions,
   setBookRequestStatusAction,
   setBooksAction,
+  setCurrentBookAction,
 } from "./actions";
 import { BookSearchCriteria, RequestStatusEnum } from "./type";
 
@@ -26,7 +28,8 @@ export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
     } */
 
     if (action.payload?.loadMore) {
-      /// we don't use the new total items due to the fact that it is not valid -_-
+      /// we don't use the new total items due to the fact that it is not valid
+      // thanks Google Book API -_-
       yield put({
         type: appendBooksAction.type,
         payload: { books: result.items },
@@ -43,7 +46,39 @@ export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
       payload: { status: RequestStatusEnum.RECEIVED },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+
+    yield put({
+      type: setBookRequestStatusAction.type,
+      payload: { status: RequestStatusEnum.REQUEST_FAILED },
+    });
+  }
+}
+
+export function* getBook(action: PayloadAction<{ bookId: string }>) {
+  try {
+    const result: GetBookResult = yield call(
+      GoogleBookApi.getBook,
+      action.payload.bookId,
+    );
+
+    // TODO: check it
+    /* if (result.error) {
+      
+    } */
+
+    yield put({
+      type: setCurrentBookAction.type,
+      payload: { book: result },
+    });
+
+    yield put({
+      type: setBookRequestStatusAction.type,
+      payload: { status: RequestStatusEnum.RECEIVED },
+    });
+  } catch (error) {
+    console.error(error);
+
     yield put({
       type: setBookRequestStatusAction.type,
       payload: { status: RequestStatusEnum.REQUEST_FAILED },
@@ -53,5 +88,8 @@ export function* getBooks(action: PayloadAction<RequestBooksActionOptions>) {
 
 // TODO: remove any
 export function* watchBooksRequest(): any {
-  yield takeLatest(requestBooksAction.type, getBooks);
+  yield all([
+    takeLatest(requestBooksAction.type, getBooks),
+    takeLatest(requestBookAction.type, getBook),
+  ]);
 }

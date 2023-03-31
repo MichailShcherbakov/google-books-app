@@ -35,11 +35,15 @@ export type Book = {
   volumeInfo: {
     authors?: string[];
     averageRating: number;
-    categories: string[];
+    categories?: string[];
     description: string;
     imageLinks?: {
       smallThumbnail: string;
       thumbnail: string;
+      small?: string;
+      medium?: string;
+      large?: string;
+      extraLarge?: string;
     };
     pageCount?: number;
     publisher: string;

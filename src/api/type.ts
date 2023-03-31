@@ -5,3 +5,5 @@ export type GetBooksResult = {
   items: Book[];
   totalItems: number;
 };
+
+export type GetBookResult = Book;

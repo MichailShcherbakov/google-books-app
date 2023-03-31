@@ -1,28 +1,25 @@
 import Image from "next/image";
-import { Stack, StackProps } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import BookIcon from "~/assets/icons/book.svg";
 
-export interface BookThumbnailProps extends StackProps {
+import BookIcon from "~/assets/icons/book.svg";
+import {
+  BookThumbnailLayout,
+  BookThumbnailLayoutProps,
+} from "./BookThumbnailLayout";
+
+export interface BookThumbnailProps extends BookThumbnailLayoutProps {
   src?: string;
-  alt: string;
+  alt?: string;
 }
 
-export function BookThumbnail({ src, alt, ...props }: BookThumbnailProps) {
+export function BookThumbnail({
+  src,
+  alt = "book thumbnail",
+  ...props
+}: BookThumbnailProps) {
   return (
-    <Stack
-      {...props}
-      sx={theme => ({
-        "& > *": {
-          width: theme.spacing(21.75),
-          height: theme.spacing(28),
-          borderRadius: theme.spacing(1),
-          color: grey[400],
-        },
-      })}
-    >
+    <BookThumbnailLayout {...props}>
       {!src && <BookIcon />}
-      {src && <Image src={src} alt={alt} />}
-    </Stack>
+      {src && <Image src={src} alt={alt} width="160" height="160" priority />}
+    </BookThumbnailLayout>
   );
 }

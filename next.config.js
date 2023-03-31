@@ -9,6 +9,10 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    minimumCacheTTL: 60,
+    domains: ["books.google.com"],
+  },
 };
 
 module.exports = nextConfig;

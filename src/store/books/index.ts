@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   appendBooksAction,
-  hydrateAction,
+  requestBookAction,
   requestBooksAction,
   setBookRequestStatusAction,
   setBooksAction,
   setBookSearchCriteriaAction,
+  setCurrentBookAction,
 } from "./actions";
 import {
   Book,
@@ -20,6 +21,7 @@ export type BookState = {
   totalCount: number;
   criteria: BookSearchCriteria;
   status: RequestStatusEnum;
+  currentBook: Book | null;
 };
 
 const initialState: BookState = {
@@ -33,6 +35,7 @@ const initialState: BookState = {
     pageSize: 30,
   },
   status: RequestStatusEnum.IDLE,
+  currentBook: null,
 };
 
 const bookSlice = createSlice({
@@ -41,12 +44,6 @@ const bookSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(hydrateAction, (state, action) => {
-        return {
-          ...state,
-          ...action.payload.books,
-        };
-      })
       .addCase(setBooksAction, (state, action) => {
         state.totalCount = action.payload.totalCount;
         state.all = action.payload.books ?? [];
@@ -70,8 +67,15 @@ const bookSlice = createSlice({
 
           state.status = RequestStatusEnum.REQUESTED_MORE;
         } else {
+          state.criteria.startIndex = 0;
           state.status = RequestStatusEnum.REQUESTED;
         }
+      })
+      .addCase(requestBookAction, state => {
+        state.status = RequestStatusEnum.REQUESTED;
+      })
+      .addCase(setCurrentBookAction, (state, action) => {
+        state.currentBook = action.payload.book;
       })
       .addCase(setBookSearchCriteriaAction, (state, action) => {
         state.criteria = {
