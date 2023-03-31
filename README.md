@@ -1,6 +1,12 @@
 # Google Book API Provider
 
-## Preview - [Link](https://calculator-constructor-dev-task.netlify.app/)
+## Preview
+
+#### Search Page
+
+<img alt src="https://github.com/MichailShcherbakov/google-books-app/blob/master/screenshots/search.png?raw=true" />
+
+#### Main Page
 
 <img alt src="https://github.com/MichailShcherbakov/google-books-app/blob/master/screenshots/main.png?raw=true" />
 
@@ -46,10 +52,11 @@ yarn start
 
 <h4>Web</h4>
 
-- NextJS
+- NextJS (SSR)
 - Redux-Toolkit
 - Redux-Saga
 - MUI (styled-components)
+- Docker
 
 ## Author
 
